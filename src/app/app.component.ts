@@ -17,7 +17,7 @@ enum Version {
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  public current_version:string = "v1";
+  public current_version:string = "v2";
 
   public box1_color: string;
   public box2_color: string;
