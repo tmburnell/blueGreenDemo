@@ -73,7 +73,7 @@ var Version;
 var AppComponent = /** @class */ (function () {
     function AppComponent(http) {
         this.http = http;
-        this.current_version = "v1";
+        this.current_version = "v2";
         this.fetureFlags = {
             "v1": true,
             "v2": false
