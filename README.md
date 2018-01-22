@@ -1,27 +1,43 @@
-# Bluegreen
+# Blue Green Demo
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.6.4.
+Is an Angular5/nodeJS demo of how blue/green deployments can work feature released on Openshift.  It is a very simple app where blue is release 1, and green is release 2.  Also the left half of the screen will always be the current release, where the right half will only display the latest approved feature release. 
 
-## Development server
+## Application layout:
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+### Angular app. 
 
-## Code scaffolding
+A standard Angular application and all the logic is just coded in the app. 
+The colors are applied via a dynamic class being added to the div's.  
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+The below line states what release is currently deployed, for demo purposes we will flip this between v1 and v2.  
+Line 20: `public current_version:string = "v2";`
 
-## Build
+**After coding changes are made the below line needs to be run**
+ng build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
+Build will compile the code and put it in the dist folder that NodeJS will use to host the static code. Therefore we will need to redeploy for Openshift to take the changes. 
 
-## Running unit tests
+### API calls
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Below are the supported API by this application
 
-## Running end-to-end tests
+<details>
+  <summary>api/v1/color</summary>
+  This call returns an object where color is blue
+</details>
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+<details>
+  <summary>api/v2/color</summary>
+  This call returns an object where color is green
+</details>
 
-## Further help
+<details>
+  <summary>api/v1/features</summary>
+  This will return back an object that will list v1 and v2 as approved releases.  `{ "v1": true, "v2": false }`
+  The current code v1 is always true, v2 is dynamic based on an environment variable that is injected to the NodeJS server.
+</details>
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+### NodeJS
+
+This is a simple express server that will handle API's and host the static code. 
+The `server.js` file contains all the code for the node server.   
